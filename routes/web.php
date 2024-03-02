@@ -22,5 +22,6 @@ Route::get('/', [PublicController::class, 'index'])->name('public.accueil');
 Route::get('/evenements', [EvenementController::class, 'index'])->name('public.evenements-index');
 
 Route::get('/inscription', [AuthController::class, 'inscription'])->name('public.inscription');
+Route::get('/connexion', [AuthController::class, 'connexion'])->name('public.connexion');
 
 Route::get('/admin-tableaudebord', [TableaudebordController::class, 'index'])->name('private.admin-tableaudebord');

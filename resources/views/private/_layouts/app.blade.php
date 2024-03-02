@@ -21,14 +21,14 @@
 
 <body>
     <div class="container-scroller">
-        @if(request()->routeIs('public.inscription') == false)
+        @if(request()->routeIs('public.inscription') == false && request()->routeIs('public.connexion') == false )
         @include('private._layouts.navbar')
         @endif
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- partial:partials/_sidebar.html -->
 
-            @if(request()->routeIs('public.inscription') == false)
+            @if(request()->routeIs('public.inscription') == false && request()->routeIs('public.connexion') == false )
             @include('private._layouts.sidebar')
             @endif
 

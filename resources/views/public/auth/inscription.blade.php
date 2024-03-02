@@ -12,7 +12,7 @@
                     <div class="brand-logo">
                         <img src="{{ asset('assets_private/images/logo.svg') }}" alt="logo">
                     </div>
-                    <h4>Bienvenu cher promoteur !!!</h4>
+                    <h4>Bienvenu cher(è) promoteur !!!</h4>
                     <h6 class="font-weight-light">Inscriver vous en tant que promoteur en suivant ces etapes.</h6>
                     <form class="pt-3">
                         <div class="form-group">
@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Password</label>
+                            <label>Mot de passe</label>
                             <div class="input-group">
                                 <div class="input-group-prepend bg-transparent">
                                     <span class="input-group-text bg-transparent border-right-0">
@@ -61,11 +61,12 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
-                                href="../../index.html">SIGN UP</a>
+                            <a class="btn btn-block btn-primary w-100 text-white btn-lg font-weight-medium auth-form-btn"
+                                href="../../index.html">Je m'inscris</a>
                         </div>
                         <div class="text-center mt-4 font-weight-light">
-                            Already have an account? <a href="login.html" class="text-primary">Login</a>
+                            Already have an account? <a href="{{ route('public.connexion') }}" class="text-primary">Se
+                                connecter</a>
                         </div>
                     </form>
                 </div>
