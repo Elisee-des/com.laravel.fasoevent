@@ -8,7 +8,7 @@
         </div>
 
         <div class="cta d-none d-md-flex align-items-center gap-2">
-            <a href="" class="scrollto">Inscription</a>
+            <a href="{{ route('public.inscription') }}" class="scrollto">Inscription</a>
             <a href="" class="scrollto">Connexion</a>
             <a href="{{ route('private.admin-tableaudebord') }}" class="scrollto">Mon Compte</a>
         </div>
@@ -20,7 +20,7 @@
     <div class="container d-flex align-items-center justify-content-between">
 
         <div class="logo">
-            <h1><a href="/">FasoEvenement</a></h1>
+            <h1><a href="/">FasoEvent</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html"><img src="assets_public/img/logo.png" alt="" class="img-fluid"></a>-->
         </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\private\Admin\TableaudebordController;
+use App\Http\Controllers\public\AuthController;
 use App\Http\Controllers\public\EvenementController;
 use App\Http\Controllers\public\PublicController;
 use Illuminate\Support\Facades\Route;
@@ -19,5 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'index'])->name('public.accueil');
 
 Route::get('/evenements', [EvenementController::class, 'index'])->name('public.evenements-index');
+
+Route::get('/inscription', [AuthController::class, 'inscription'])->name('public.inscription');
 
 Route::get('/admin-tableaudebord', [TableaudebordController::class, 'index'])->name('private.admin-tableaudebord');
