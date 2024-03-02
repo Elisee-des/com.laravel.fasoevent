@@ -1,4 +1,4 @@
-@extends('public.layouts.app')
+@extends('public._layouts.app')
 
 @section('titre', "FasoEvent")
 
@@ -16,8 +16,6 @@
 </section><!-- End Hero -->
 
 <main id="main">
-
-    <!-- ======= Why Us Section ======= -->
     <section id="why-us" class="why-us">
         <div class="container">
 
