@@ -1,6 +1,6 @@
 @extends('private._layouts.app')
 
-@section('titre', 'Admin tableau de bord')
+@section('titre', 'Abonné tableau de bord')
 
 @section('contenu')
 
@@ -12,7 +12,7 @@
                 <div class="d-flex justify-content-between flex-wrap">
                     <div class="d-flex align-items-end flex-wrap">
                         <div class="me-md-3 me-xl-5">
-                            <h2>Welcome back, ADMIN</h2>
+                            <h2>Welcome back, ABONNE</h2>
                             <p class="mb-md-0">Your analytics dashboard template.</p>
                         </div>
                         <div class="d-flex">

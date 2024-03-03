@@ -13,3 +13,149 @@ ipconfig getifaddr en0
 192.168.43.72:8001
 
 delegue
+$data = User::orderBy('id','DESC')->paginate(5);
+
+
+==================================================================
+
+        Route::get('/evenements', [EvenementController::class, 'index'])->name('public.evenements-index');
+
+        ------
+        La nav-active
+        ------
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto {{ request()->routeIs('public.accueil') ? 'active' : '' }}"
+                        href="{{ route('public.accueil') }}">Accueil</a></li>
+
+                @if(!request()->routeIs('public.evenements-index'))
+                <li><a class="nav-link scrollto" href="#about">A propos</a></li>
+                <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
+                <li><a class="nav-link scrollto" href="#team">Equipe</a></li>
+                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                @endif
+
+                <li><a class="nav-link scrollto {{ request()->routeIs('public.evenements-index') ? 'active' : '' }}"
+                        href="{{ route('public.evenements-index') }}">Evenements</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+
+
+        @if ($errors->has('nomcomplte'))
+        <span class="text-danger">{{ $errors->first('nomcomplte') }}</span>
+        @endif
+
+
+        -------
+        ====>inscription
+        -------
+            public function inscriptionAction(Request $request)
+        {
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nomcomplet' => 'required',
+                'email' => 'required|email|max:250|unique:users',
+                'password' => 'required|min:4',
+                'siege' => 'required',
+                'activites' => 'required',
+            ],
+            [
+                'nomcomplet.required' => 'Le champ nom et prénom est requis.',
+                'email.required' => 'Le champ email est requis.',
+                'email.email' => 'Veuillez entrer une adresse email valide.',
+                'email.max' => 'L\'adresse email ne doit pas dépasser :max caractères.',
+                'email.unique' => 'Cette adresse email est déjà utilisée.',
+                'password.required' => 'Le champ mot de passe est requis.',
+                'password.min' => 'Le mot de passe doit contenir au moins :min caractères.',
+                'siege.required' => 'Le champ siege est requis.',
+                'activites.required' => 'Le champ domaines d\'activites est requis.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = User::create([
+            'nomcomplet' => $request->nomcomplet,
+            'email' => $request->email,
+            'password' => $request->password,
+            'siege' => $request->siege,
+            'activites' => $request->activites,
+        ]);
+
+        $user->assignRole('PROMOTEUR');
+
+        return redirect()->route('login')->withMessage('Inscription réussie ! Connectez-vous maintenant.');
+    }
+
+        ------
+        ====>connexion
+        ------
+            public function connecionAction(Request $request)
+        {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => 'required|email',
+                'password' => 'required',
+            ],
+            [
+                'email.required' => 'Le champ email est requis.',
+                'email.email' => 'Veuillez entrer une adresse email valide.',
+                'password.required' => 'Le champ mot de passe est requis.',
+            ]
+        );
+
+        //On retourn tout les erreurs
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // Vérifier si un utilisateur avec cet email existe
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return redirect()->back()
+                ->withErrors(['login' => "Cet email n'a pas de compte"])
+                ->withInput();
+        }
+
+        //On le connecte ici
+        if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+            return redirect()->back()
+                ->withErrors(['login' => 'Mot de passe est incorrect'])
+                ->withInput();
+        }
+
+        $request->session()->regenerate();
+
+        $user = Auth::user();
+        $redirectRoute = '';
+
+        if ($user->role == 'ADMIN') {
+            $redirectRoute = 'admin.tableaudebord';
+        }
+
+        if ($user->role == "PROMOTEUR") {
+            $redirectRoute = 'promoteur.tableaudebord';
+        }
+        
+        elseif ($user->role =='Etudiant') {
+            $redirectRoute = 'abonne.tableaudebord';
+        }
+
+        if (!empty($redirectRoute)) {
+            return redirect()->route($redirectRoute)->withMessage("Connexion réussie ! Bienvenue, {$user->nomcomplet}");
+        }
+    }
+
+    
+    -----

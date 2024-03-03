@@ -5,9 +5,9 @@ namespace App\Http\Controllers\private\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TableaudebordController extends Controller
+class AdminTableaudebordController extends Controller
 {
-    public function index()
+    public function admintableaudebord()
     {
         return view('private.admin.tableaudebord');
     }

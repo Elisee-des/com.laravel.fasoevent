@@ -1,9 +1,23 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="../../index.html">
+            <a class="nav-link" href="{{ route('private.admin-tableaudebord') }}">
                 <i class="mdi mdi-home menu-icon"></i>
-                <span class="menu-title">Tableau de bord</span>
+                <span class="menu-title">Admin Tableau de bord</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('private.promoteur-tableaudebord') }}">
+                <i class="mdi mdi-home menu-icon"></i>
+                <span class="menu-title">Promoteur Tableau de bord</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('private.abonne-tableaudebord') }}">
+                <i class="mdi mdi-home menu-icon"></i>
+                <span class="menu-title">Abonné Tableau de bord</span>
             </a>
         </li>
 

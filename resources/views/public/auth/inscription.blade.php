@@ -14,7 +14,8 @@
                     </div>
                     <h4>Bienvenu cher(è) promoteur !!!</h4>
                     <h6 class="font-weight-light">Inscriver vous en tant que promoteur en suivant ces etapes.</h6>
-                    <form class="pt-3">
+                    <form action="{{route('public.inscription-action')}}" class="pt-3" method="POST">
+                        @csrf
                         <div class="form-group">
                             <label>Nom complet</label>
                             <div class="input-group">
@@ -23,8 +24,11 @@
                                         <i class="mdi mdi-account-outline text-primary"></i>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control form-control-lg border-left-0"
+                                <input type="text" name="nomcomplte" class="form-control form-control-lg border-left-0"
                                     placeholder="Nom complet">
+                                @if ($errors->has('nomcomplte'))
+                                <span class="text-danger">{{ $errors->first('nomcomplte') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group">
@@ -35,8 +39,11 @@
                                         <i class="mdi mdi-email-outline text-primary"></i>
                                     </span>
                                 </div>
-                                <input type="email" class="form-control form-control-lg border-left-0"
+                                <input type="email" name="email" class="form-control form-control-lg border-left-0"
                                     placeholder="Email">
+                                @if ($errors->has('email'))
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
                         </div>
 
@@ -48,24 +55,64 @@
                                         <i class="mdi mdi-lock-outline text-primary"></i>
                                     </span>
                                 </div>
-                                <input type="password" class="form-control form-control-lg border-left-0"
-                                    id="exampleInputPassword" placeholder="Password">
+                                <input type="password" name="password"
+                                    class="form-control form-control-lg border-left-0" id="exampleInputPassword"
+                                    placeholder="Password">
+                                @if ($errors->has('password'))
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label>Siège</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend bg-transparent">
+                                    <span class="input-group-text bg-transparent border-right-0">
+                                        <i class="mdi mdi-lock-outline text-primary"></i>
+                                    </span>
+                                </div>
+                                <input type="siege" name="siege" class="form-control form-control-lg border-left-0"
+                                    id="exampleInputSiege" placeholder="siege">
+                                @if ($errors->has('siege'))
+                                <span class="text-danger">{{ $errors->first('siege') }}</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Domaines d'activités</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend bg-transparent">
+                                    <span class="input-group-text bg-transparent border-right-0">
+                                        <i class="mdi mdi-lock-outline text-primary"></i>
+                                    </span>
+                                </div>
+                                <!-- Remplacez la balise <input> par <textarea> -->
+                                <textarea name="activites" class="form-control form-control-lg border-left-0"
+                                    id="exampleInputActivite" placeholder="siege"></textarea>
+                                @if ($errors->has('activites'))
+                                <span class="text-danger">{{ $errors->first('activites') }}</span>
+                                @endif
+                            </div>
+                        </div>
+
+
                         <div class="mb-4">
                             <div class="form-check">
                                 <label class="form-check-label text-muted">
                                     <input type="checkbox" class="form-check-input">
-                                    I agree to all Terms & Conditions
+                                    J'accepte les conditions d'utilisation
                                 </label>
                             </div>
                         </div>
                         <div class="mt-3">
-                            <a class="btn btn-block btn-primary w-100 text-white btn-lg font-weight-medium auth-form-btn"
-                                href="../../index.html">Je m'inscris</a>
+                            <button type="submit"
+                                class="btn btn-block btn-primary w-100 text-white btn-lg font-weight-medium auth-form-btn">Je
+                                m'inscris</button>
                         </div>
                         <div class="text-center mt-4 font-weight-light">
-                            Already have an account? <a href="{{ route('public.connexion') }}" class="text-primary">Se
+                            Vous avez déja un compte ? <a href="{{ route('public.connexion') }}" class="text-primary">Se
                                 connecter</a>
                         </div>
                     </form>

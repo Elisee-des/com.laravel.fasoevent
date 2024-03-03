@@ -1,4 +1,4 @@
-@extends('public.layouts.app')
+@extends('public._layouts.app')
 
 @section('titre', 'Liste des evenements')
 
