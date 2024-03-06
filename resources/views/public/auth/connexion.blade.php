@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="text-center mt-4 font-weight-light">
-                            Vous n'avez pas de compte ? <a href="{{ route('public.inscription') }}"
+                            Vous n'avez pas de compte ? <a href="{{ route('public.inscription-option') }}"
                                 class="text-primary">S'inscrire</a>
                         </div>
                     </form>

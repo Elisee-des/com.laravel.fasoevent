@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Promoteur;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,22 +11,27 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function inscription()
+    public function inscriptionOption()
     {
-        return view('public.auth.inscription');
+        return view('public.auth.inscription-option');
     }
 
-    public function inscriptionAction(Request $request)
+    public function inscriptionPromoteur()
     {
-        dd($request->all());
+        return view('public.auth.inscription-promoteur');
+    }
+
+    public function inscriptionPromoteurAction(Request $request)
+    {
         $validator = Validator::make(
             $request->all(),
             [
                 'nomcomplet' => 'required',
-                'email' => 'required|email|max:250|unique:users',
-                'password' => 'required|min:4',
+                'email' => 'required|email|max:255|unique:promoteurs',
                 'siege' => 'required',
                 'activites' => 'required',
+                'telephone' => 'required',
+                'password' => 'required|min:4',
             ],
             [
                 'nomcomplet.required' => 'Le champ nom et prénom est requis.',
@@ -36,6 +42,7 @@ class AuthController extends Controller
                 'password.required' => 'Le champ mot de passe est requis.',
                 'password.min' => 'Le mot de passe doit contenir au moins :min caractères.',
                 'siege.required' => 'Le champ siege est requis.',
+                'telephone.required' => 'Le champ telephone est requis.',
                 'activites.required' => 'Le champ domaines d\'activites est requis.',
             ]
         );
@@ -46,17 +53,26 @@ class AuthController extends Controller
                 ->withInput();
         }
 
-        $user = User::create([
+        $promoteur = Promoteur::create([
             'nomcomplet' => $request->nomcomplet,
             'email' => $request->email,
             'password' => $request->password,
             'siege' => $request->siege,
+            'telephone' => $request->telephone,
             'activites' => $request->activites,
         ]);
 
-        $user->assignRole('PROMOTEUR');
+        $promoteur->assignRole('PROMOTEUR');
+
+        // Connectez l'abonné si nécessaire
+        // auth()->login($abonne);
 
         return redirect()->route('login')->withMessage('Inscription réussie ! Connectez-vous maintenant.');
+    }
+
+    public function inscriptionAbonne()
+    {
+        return view('public.auth.inscription-abonne');
     }
 
     public function connexion()

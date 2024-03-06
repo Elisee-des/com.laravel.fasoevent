@@ -8,7 +8,7 @@
         </div>
 
         <div class="cta d-none d-md-flex align-items-center gap-2">
-            <a href="{{ route('public.inscription') }}" class="scrollto">Inscription</a>
+            <a href="{{ route('public.inscription-option') }}" class="scrollto">Inscription</a>
             <a href="{{ route('public.connexion') }}" class="scrollto">Connexion</a>
             <a href="{{ route('private.admin-tableaudebord') }}" class="scrollto">Mon Compte</a>
         </div>

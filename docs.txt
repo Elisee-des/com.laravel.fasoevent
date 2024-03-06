@@ -15,7 +15,7 @@ ipconfig getifaddr en0
 delegue
 $data = User::orderBy('id','DESC')->paginate(5);
 
-
+https://www.honeybadger.io/blog/user-roles-permissions-in-laravel/
 ==================================================================
 
         Route::get('/evenements', [EvenementController::class, 'index'])->name('public.evenements-index');
@@ -42,6 +42,74 @@ $data = User::orderBy('id','DESC')->paginate(5);
         </nav>
 
 
+        ------Auth-----
+
+        php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+
+        Kernel.php
+        'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+
+        auth.php
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+            'model' => App\Models\Promoteur::class,
+            'model' => App\Models\Abonne::class,
+            'model' => App\Models\Admin::class,
+        ],
+
+        app.php
+        Spatie\Permission\PermissionServiceProvider::class,
+
+        php artisan make:seeder RoleAndPermissionSeeder
+
+        class RoleAndPermissionSeeder extends Seeder
+        {
+            public function run(): void
+            {
+
+                Role::create(['name' => 'ADMIN']);
+                Role::create(['name' => 'PROMOTEUR']);
+                Role::create(['name' => 'ABONNE']);
+
+                // $adminRole->givePermissionTo('all');
+                // $delegueRole->givePermissionTo('can-manage-files');
+            }
+        }
+
+        php artisan migrate --seed
+
+        $this->call([
+            RoleAndPermissionSeeder::class,
+        ]);
+
+        php artisan db:seed
+
+        class Promoteur extends Model
+        {
+            protected $fillable = ['nomcompet', 'email', 'password', 'telephone', 'siege', 'domaines_activites'];
+        }
+
+        // Modèle pour Abonne
+        class Abonne extends Model
+        {
+            protected $fillable = ['nom', 'prenom', 'email', 'password', 'adresse', 'preferences'];
+        }
+
+        /**
+        * Always encrypt password when it is updated.
+        *
+        * @param $value
+        * @return string
+        */
+        public function setPasswordAttribute($value)
+        {
+            $this->attributes['password'] = bcrypt($value);
+        }
+
+
         @if ($errors->has('nomcomplte'))
         <span class="text-danger">{{ $errors->first('nomcomplte') }}</span>
         @endif
@@ -50,17 +118,16 @@ $data = User::orderBy('id','DESC')->paginate(5);
         -------
         ====>inscription
         -------
-            public function inscriptionAction(Request $request)
-        {
-
+    public function inscriptionAction(Request $request)
+    {
         $validator = Validator::make(
             $request->all(),
             [
                 'nomcomplet' => 'required',
-                'email' => 'required|email|max:250|unique:users',
-                'password' => 'required|min:4',
-                'siege' => 'required',
+                'email' => 'required|string|email|max:255|unique=promoteurs|unique=abonnes',                'password' => 'required|min:4',
+                'siege' => 'requusersired',
                 'activites' => 'required',
+                'telephone' => 'required',
             ],
             [
                 'nomcomplet.required' => 'Le champ nom et prénom est requis.',
@@ -71,9 +138,11 @@ $data = User::orderBy('id','DESC')->paginate(5);
                 'password.required' => 'Le champ mot de passe est requis.',
                 'password.min' => 'Le mot de passe doit contenir au moins :min caractères.',
                 'siege.required' => 'Le champ siege est requis.',
+                'telephone.required' => 'Le champ telephone est requis.',
                 'activites.required' => 'Le champ domaines d\'activites est requis.',
             ]
         );
+
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -81,15 +150,18 @@ $data = User::orderBy('id','DESC')->paginate(5);
                 ->withInput();
         }
 
-        $user = User::create([
+        dd($request->all());
+
+        $promoteur = Promoteur::create([
             'nomcomplet' => $request->nomcomplet,
             'email' => $request->email,
             'password' => $request->password,
             'siege' => $request->siege,
+            'telephone' => $request->telephone,
             'activites' => $request->activites,
         ]);
 
-        $user->assignRole('PROMOTEUR');
+        $promoteur->assignRole('PROMOTEUR');
 
         return redirect()->route('login')->withMessage('Inscription réussie ! Connectez-vous maintenant.');
     }
@@ -97,7 +169,7 @@ $data = User::orderBy('id','DESC')->paginate(5);
         ------
         ====>connexion
         ------
-            public function connecionAction(Request $request)
+        public function connecionAction(Request $request)
         {
         $validator = Validator::make(
             $request->all(),

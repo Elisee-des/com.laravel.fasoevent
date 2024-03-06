@@ -24,8 +24,10 @@ Route::get('/', [PublicController::class, 'index'])->name('public.accueil');
 
 Route::get('/evenements', [EvenementController::class, 'index'])->name('public.evenements-index');
 
-Route::get('/inscription', [AuthController::class, 'inscription'])->name('public.inscription');
-Route::post('/inscription/action', [AuthController::class, 'inscriptionAction'])->name('public.inscription-action');
+Route::get('/inscription/promoteur', [AuthController::class, 'inscriptionPromoteur'])->name('public.inscription-promoteur');
+Route::get('/inscription/abonne', [AuthController::class, 'inscriptionAbonne'])->name('public.inscription-abonne');
+Route::get('/inscription/option', [AuthController::class, 'inscriptionOption'])->name('public.inscription-option');
+Route::post('/inscription/action', [AuthController::class, 'inscriptionPromoteurAction'])->name('public.inscription-action');
 Route::get('/connexion', [AuthController::class, 'connexion'])->name('public.connexion');
 
 Route::get('/admin-tableaudebord', [AdminTableaudebordController::class, 'admintableaudebord'])->name('private.admin-tableaudebord');

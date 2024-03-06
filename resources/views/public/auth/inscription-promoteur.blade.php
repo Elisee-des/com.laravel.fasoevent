@@ -10,7 +10,8 @@
             <div class="col-lg-6 d-flex align-items-center justify-content-center">
                 <div class="auth-form-transparent text-left p-3">
                     <div class="brand-logo">
-                        <img src="{{ asset('assets_private/images/logo.svg') }}" alt="logo">
+                        <a href="{{ route('public.accueil') }}"><img src="{{ asset('assets_private/images/logo.svg') }}"
+                                alt="logo"></a>
                     </div>
                     <h4>Bienvenu cher(è) promoteur !!!</h4>
                     <h6 class="font-weight-light">Inscriver vous en tant que promoteur en suivant ces etapes.</h6>
@@ -24,10 +25,10 @@
                                         <i class="mdi mdi-account-outline text-primary"></i>
                                     </span>
                                 </div>
-                                <input type="text" name="nomcomplte" class="form-control form-control-lg border-left-0"
+                                <input type="text" name="nomcomplet" class="form-control form-control-lg border-left-0"
                                     placeholder="Nom complet">
-                                @if ($errors->has('nomcomplte'))
-                                <span class="text-danger">{{ $errors->first('nomcomplte') }}</span>
+                                @if ($errors->has('nomcomplet'))
+                                <span class="text-danger">{{ $errors->first('nomcomplet') }}</span>
                                 @endif
                             </div>
                         </div>
@@ -72,10 +73,26 @@
                                         <i class="mdi mdi-lock-outline text-primary"></i>
                                     </span>
                                 </div>
-                                <input type="siege" name="siege" class="form-control form-control-lg border-left-0"
+                                <input type="text" name="siege" class="form-control form-control-lg border-left-0"
                                     id="exampleInputSiege" placeholder="siege">
                                 @if ($errors->has('siege'))
                                 <span class="text-danger">{{ $errors->first('siege') }}</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Telephone</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend bg-transparent">
+                                    <span class="input-group-text bg-transparent border-right-0">
+                                        <i class="mdi mdi-lock-outline text-primary"></i>
+                                    </span>
+                                </div>
+                                <input type="number" name="telephone" class="form-control form-control-lg border-left-0"
+                                    id="exampleInputTelephone" placeholder="Telephone">
+                                @if ($errors->has('telephone'))
+                                <span class="text-danger">{{ $errors->first('telephone') }}</span>
                                 @endif
                             </div>
                         </div>
@@ -90,7 +107,8 @@
                                 </div>
                                 <!-- Remplacez la balise <input> par <textarea> -->
                                 <textarea name="activites" class="form-control form-control-lg border-left-0"
-                                    id="exampleInputActivite" placeholder="siege"></textarea>
+                                    id="exampleInputActivite"
+                                    placeholder="Choississez vos domaines d'activités"></textarea>
                                 @if ($errors->has('activites'))
                                 <span class="text-danger">{{ $errors->first('activites') }}</span>
                                 @endif
@@ -114,6 +132,11 @@
                         <div class="text-center mt-4 font-weight-light">
                             Vous avez déja un compte ? <a href="{{ route('public.connexion') }}" class="text-primary">Se
                                 connecter</a>
+                        </div>
+                        <div class="text-center mt-4 font-weight-light">
+                            S'inscrire en tant que abonné ? <a href="{{ route('public.inscription-abonne') }}"
+                                class="text-primary">
+                                Inscription abonné</a>
                         </div>
                     </form>
                 </div>

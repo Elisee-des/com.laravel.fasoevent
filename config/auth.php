@@ -63,6 +63,9 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+            'model' => App\Models\Promoteur::class,
+            'model' => App\Models\Abonne::class,
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
