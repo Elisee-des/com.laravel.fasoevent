@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('prenom');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('role')->default("ABONNE");
             $table->string('telephone');
             $table->text('photo');
             $table->string('preferences');

@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Promoteur extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasRoles, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,9 +23,11 @@ class Promoteur extends Authenticatable
         'email',
         'password',
         'photo',
+        'role',
         'telephone',
         'siege',
-        'activites'
+        'activites',
+        'status'
     ];
 
 

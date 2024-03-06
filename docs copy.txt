@@ -1,37 +1,90 @@
-<?php
 
-namespace App\Http\Controllers\public;
 
-use App\Http\Controllers\Controller;
-use App\Models\Promoteur;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+        Route::get('/evenements', [EvenementController::class, 'index'])->name('public.evenements-index');
 
-class AuthController extends Controller
-{
-    public function inscriptionOption()
-    {
-        return view('public.auth.inscription-option');
-    }
+        ------
+        La nav-active
+        ------
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto {{ request()->routeIs('public.accueil') ? 'active' : '' }}"
+                        href="{{ route('public.accueil') }}">Accueil</a></li>
 
-    public function inscriptionPromoteur()
-    {
-        return view('public.auth.inscription-promoteur');
-    }
+                @if(!request()->routeIs('public.evenements-index'))
+                <li><a class="nav-link scrollto" href="#about">A propos</a></li>
+                <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
+                <li><a class="nav-link scrollto" href="#team">Equipe</a></li>
+                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                @endif
 
-    public function inscriptionPromoteurAction(Request $request)
+                <li><a class="nav-link scrollto {{ request()->routeIs('public.evenements-index') ? 'active' : '' }}"
+                        href="{{ route('public.evenements-index') }}">Evenements</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+
+
+        ------Auth-----
+
+        Kernel.php
+
+        auth.php
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+            'model' => App\Models\Promoteur::class,
+            'model' => App\Models\Abonne::class,
+            'model' => App\Models\Admin::class,
+        ],
+
+        app.php
+
+
+        php artisan migrate --seed
+
+        php artisan db:seed
+
+        class Promoteur extends Model
+        {
+            protected $fillable = ['nomcompet', 'email', 'password', 'telephone', 'siege', 'domaines_activites'];
+        }
+
+        // Modèle pour Abonne
+        class Abonne extends Model
+        {
+            protected $fillable = ['nom', 'prenom', 'email', 'password', 'adresse', 'preferences'];
+        }
+
+        /**
+        * Always encrypt password when it is updated.
+        *
+        * @param $value
+        * @return string
+        */
+        public function setPasswordAttribute($value)
+        {
+            $this->attributes['password'] = bcrypt($value);
+        }
+
+
+        @if ($errors->has('nomcomplte'))
+        <span class="text-danger">{{ $errors->first('nomcomplte') }}</span>
+        @endif
+
+
+        -------
+        ====>inscription
+        -------
+    public function inscriptionAction(Request $request)
     {
         $validator = Validator::make(
             $request->all(),
             [
                 'nomcomplet' => 'required',
-                'email' => 'required|email|max:255|unique:promoteurs',
-                'siege' => 'required',
+                'email' => 'required|string|email|max:255|unique=promoteurs|unique=abonnes',                'password' => 'required|min:4',
+                'siege' => 'requusersired',
                 'activites' => 'required',
                 'telephone' => 'required',
-                'password' => 'required|min:4',
             ],
             [
                 'nomcomplet.required' => 'Le champ nom et prénom est requis.',
@@ -47,11 +100,14 @@ class AuthController extends Controller
             ]
         );
 
+
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
+
+        dd($request->all());
 
         $promoteur = Promoteur::create([
             'nomcomplet' => $request->nomcomplet,
@@ -62,26 +118,16 @@ class AuthController extends Controller
             'activites' => $request->activites,
         ]);
 
-        $promoteur->save();
-        // Connectez l'abonné si nécessaire
-        // auth()->login($abonne);
+        $promoteur->assignRole('PROMOTEUR');
 
-        return redirect()->route('public.connexion')->withMessage('Inscription réussie ! Connectez-vous maintenant.');
+        return redirect()->route('login')->withMessage('Inscription réussie ! Connectez-vous maintenant.');
     }
 
-    public function inscriptionAbonne()
-    {
-        return view('public.auth.inscription-abonne');
-    }
-
-    public function connexion()
-    {
-        return view('public.auth.connexion');
-    }
-
-    public function connecionAction(Request $request)
-    {
-        //On valide si c'est bon ou pas
+        ------
+        ====>connexion
+        ------
+        public function connecionAction(Request $request)
+        {
         $validator = Validator::make(
             $request->all(),
             [
@@ -124,16 +170,21 @@ class AuthController extends Controller
         $redirectRoute = '';
 
         if ($user->role == 'ADMIN') {
-            $redirectRoute = 'private.admin-tableaudebord';
+            $redirectRoute = 'admin.tableaudebord';
         }
+
         if ($user->role == "PROMOTEUR") {
-            $redirectRoute = 'private.promoteur-tableaudebord';
-        } elseif ($user->role == 'ABONNE') {
-            $redirectRoute = 'private.abonne-tableaudebord';
+            $redirectRoute = 'promoteur.tableaudebord';
+        }
+        
+        elseif ($user->role =='Etudiant') {
+            $redirectRoute = 'abonne.tableaudebord';
         }
 
         if (!empty($redirectRoute)) {
             return redirect()->route($redirectRoute)->withMessage("Connexion réussie ! Bienvenue, {$user->nomcomplet}");
         }
     }
-}
+
+    
+    -----

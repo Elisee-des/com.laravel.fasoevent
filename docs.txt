@@ -13,7 +13,7 @@ ipconfig getifaddr en0
 192.168.43.72:8001
 
 delegue
-$data = User::orderBy('id','DESC')->paginate(5);
+$data = User::orderBy('id','DESC');
 
 https://www.honeybadger.io/blog/user-roles-permissions-in-laravel/
 ==================================================================
@@ -65,25 +65,8 @@ https://www.honeybadger.io/blog/user-roles-permissions-in-laravel/
 
         php artisan make:seeder RoleAndPermissionSeeder
 
-        class RoleAndPermissionSeeder extends Seeder
-        {
-            public function run(): void
-            {
-
-                Role::create(['name' => 'ADMIN']);
-                Role::create(['name' => 'PROMOTEUR']);
-                Role::create(['name' => 'ABONNE']);
-
-                // $adminRole->givePermissionTo('all');
-                // $delegueRole->givePermissionTo('can-manage-files');
-            }
-        }
 
         php artisan migrate --seed
-
-        $this->call([
-            RoleAndPermissionSeeder::class,
-        ]);
 
         php artisan db:seed
 

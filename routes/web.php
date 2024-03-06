@@ -30,6 +30,10 @@ Route::get('/inscription/option', [AuthController::class, 'inscriptionOption'])-
 Route::post('/inscription/action', [AuthController::class, 'inscriptionPromoteurAction'])->name('public.inscription-action');
 Route::get('/connexion', [AuthController::class, 'connexion'])->name('public.connexion');
 
-Route::get('/admin-tableaudebord', [AdminTableaudebordController::class, 'admintableaudebord'])->name('private.admin-tableaudebord');
+Route::middleware(['auth', 'checkrole:ADMIN'])->group(function () {
+    Route::get('/admin-tableaudebord', [AdminTableaudebordController::class, 'admintableaudebord'])
+        ->name('private.admin-tableaudebord');
+});
+
 Route::get('/promoteur-tableaudebord', [PromoteurTableaudebordController::class, 'promoteurtableaudebord'])->name('private.promoteur-tableaudebord');
 Route::get('/abonne-tableaudebord', [AbonneTableaudebordController::class, 'abonnetableaudebord'])->name('private.abonne-tableaudebord');

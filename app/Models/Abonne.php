@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Abonne extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasRoles, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +22,7 @@ class Abonne extends Authenticatable
         'nom',
         'prenom',
         'email',
+        'role',
         'password',
         'telephone',
         'photo',

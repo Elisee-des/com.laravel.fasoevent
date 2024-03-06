@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('telephone');
             $table->string('siege');
             $table->string('activites');
-            $table->enum('role', ['ADMIN', 'PROMOTEUR', 'ABONNE'])->default('ABONNE');
+            $table->string('role')->default("PROMOTEUR");
             $table->enum('status', ['attente', 'accepter', 'rejeter'])->default('attente');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
