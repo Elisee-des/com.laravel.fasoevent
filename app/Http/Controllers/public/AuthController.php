@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\public;
 
 use App\Http\Controllers\Controller;
-use App\Models\Promoteur;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +26,7 @@ class AuthController extends Controller
             $request->all(),
             [
                 'nomcomplet' => 'required',
-                'email' => 'required|email|max:255|unique:promoteurs',
+                'email' => 'required|email|max:255|unique:users',
                 'siege' => 'required',
                 'activites' => 'required',
                 'telephone' => 'required',
@@ -53,18 +52,18 @@ class AuthController extends Controller
                 ->withInput();
         }
 
-        $promoteur = Promoteur::create([
+        $promoteur = User::create([
             'nomcomplet' => $request->nomcomplet,
             'email' => $request->email,
             'password' => $request->password,
             'siege' => $request->siege,
             'telephone' => $request->telephone,
             'activites' => $request->activites,
+            'role' => "promoteur",
+            'status' => "attente",
         ]);
 
         $promoteur->save();
-        // Connectez l'abonné si nécessaire
-        // auth()->login($abonne);
 
         return redirect()->route('public.connexion')->withMessage('Inscription réussie ! Connectez-vous maintenant.');
     }
@@ -74,14 +73,60 @@ class AuthController extends Controller
         return view('public.auth.inscription-abonne');
     }
 
+    public function inscriptionAbonneAction(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nom' => 'required',
+                'prenom' => 'required',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required',
+                'telephone' => 'required',
+                'preferences' => 'required',
+            ],
+            [
+                'nom.required' => 'Le champ nom et prénom est requis.',
+                'prenom.required' => 'Le champ nomcomplet et prénom est requis.',
+                'email.required' => 'Le champ email est requis.',
+                'email.email' => 'Veuillez entrer une adresse email valide.',
+                'email.max' => 'L\'adresse email ne doit pas dépasser :max caractères.',
+                'email.unique' => 'Cette adresse email est déjà utilisée.',
+                'password.required' => 'Le champ mot de passe est requis.',
+                'password.min' => 'Le mot de passe doit contenir au moins :min caractères.',
+                'telephone.required' => 'Le champ telephone est requis.',
+                'preferences.required' => 'Le champ preferences est requis.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $abonne = User::create([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'password' => $request->password,
+            'email' => $request->email,
+            'telephone' => $request->telephone,
+            'preferences' => $request->preferences,
+            'role' => "abonne",
+        ]);
+
+        $abonne->save();
+
+        return redirect()->route('public.connexion')->withMessage('Inscription réussie ! Connectez-vous maintenant.');
+    }
+
     public function connexion()
     {
         return view('public.auth.connexion');
     }
 
-    public function connecionAction(Request $request)
+    public function connectionAction(Request $request)
     {
-        //On valide si c'est bon ou pas
         $validator = Validator::make(
             $request->all(),
             [
@@ -120,20 +165,20 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
+        //On voie sur quel page on dois le redirigé
         $user = Auth::user();
         $redirectRoute = '';
 
-        if ($user->role == 'ADMIN') {
+        if ($user->role == 'admin') {
             $redirectRoute = 'private.admin-tableaudebord';
-        }
-        if ($user->role == "PROMOTEUR") {
+        } elseif ($user->role == 'promoteur') {
             $redirectRoute = 'private.promoteur-tableaudebord';
-        } elseif ($user->role == 'ABONNE') {
+        } elseif ($user->role == 'abonne') {
             $redirectRoute = 'private.abonne-tableaudebord';
         }
 
         if (!empty($redirectRoute)) {
-            return redirect()->route($redirectRoute)->withMessage("Connexion réussie ! Bienvenue, {$user->nomcomplet}");
+            return redirect()->route($redirectRoute)->withMessage("Connexion réussie !");
         }
     }
 }

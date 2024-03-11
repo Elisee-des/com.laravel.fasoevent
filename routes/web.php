@@ -27,13 +27,26 @@ Route::get('/evenements', [EvenementController::class, 'index'])->name('public.e
 Route::get('/inscription/promoteur', [AuthController::class, 'inscriptionPromoteur'])->name('public.inscription-promoteur');
 Route::get('/inscription/abonne', [AuthController::class, 'inscriptionAbonne'])->name('public.inscription-abonne');
 Route::get('/inscription/option', [AuthController::class, 'inscriptionOption'])->name('public.inscription-option');
-Route::post('/inscription/action', [AuthController::class, 'inscriptionPromoteurAction'])->name('public.inscription-action');
+Route::post('/inscription/promteur/action', [AuthController::class, 'inscriptionPromoteurAction'])->name('public.inscription-promoteur-action');
+Route::post('/inscription/abonne/action', [AuthController::class, 'inscriptionAbonneAction'])->name('public.inscription-abonne-action');
 Route::get('/connexion', [AuthController::class, 'connexion'])->name('public.connexion');
+Route::post('/connexion/action', [AuthController::class, 'connectionAction'])->name('public.connexion-action');
 
-Route::middleware(['auth', 'checkrole:ADMIN'])->group(function () {
-    Route::get('/admin-tableaudebord', [AdminTableaudebordController::class, 'admintableaudebord'])
-        ->name('private.admin-tableaudebord');
+################################ Private parts #################################
+#Admin routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin-tableaudebord', [AdminTableaudebordController::class, 'admintableaudebord'])->name('private.admin-tableaudebord');
 });
 
-Route::get('/promoteur-tableaudebord', [PromoteurTableaudebordController::class, 'promoteurtableaudebord'])->name('private.promoteur-tableaudebord');
-Route::get('/abonne-tableaudebord', [AbonneTableaudebordController::class, 'abonnetableaudebord'])->name('private.abonne-tableaudebord');
+
+#Promoteur routes
+Route::middleware(['auth', 'role:promoteur'])->group(function () {
+    Route::get('/promoteur-tableaudebord', [PromoteurTableaudebordController::class, 'promoteurtableaudebord'])->name('private.promoteur-tableaudebord');
+});
+
+
+#Abonne routes
+Route::middleware(['auth', 'role:abonne'])->group(function () {
+    Route::get('/abonne-tableaudebord', [AbonneTableaudebordController::class, 'abonnetableaudebord'])->name('private.abonne-tableaudebord');
+});
+

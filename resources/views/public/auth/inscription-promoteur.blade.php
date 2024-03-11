@@ -15,7 +15,7 @@
                     </div>
                     <h4>Bienvenu cher(è) promoteur !!!</h4>
                     <h6 class="font-weight-light">Inscriver vous en tant que promoteur en suivant ces etapes.</h6>
-                    <form action="{{route('public.inscription-action')}}" class="pt-3" method="POST">
+                    <form action="{{route('public.inscription-promoteur-action')}}" class="pt-3" method="POST">
                         @csrf
                         <div class="form-group">
                             <label>Nom complet</label>

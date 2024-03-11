@@ -15,7 +15,7 @@
                     </div>
                     <h4>Bienvenu cher(è) abonné !!!</h4>
                     <h6 class="font-weight-light">Inscriver vous en tant que abonné en suivant ces etapes.</h6>
-                    <form action="{{route('public.inscription-action')}}" class="pt-3" method="POST">
+                    <form action="{{route('public.inscription-abonne-action')}}" class="pt-3" method="POST">
                         @csrf
                         <div class="form-group">
                             <label>Nom</label>
@@ -25,7 +25,7 @@
                                         <i class="mdi mdi-account-outline text-primary"></i>
                                     </span>
                                 </div>
-                                <input type="text" name="nomcomplte" class="form-control form-control-lg border-left-0"
+                                <input type="text" name="nom" class="form-control form-control-lg border-left-0"
                                     placeholder="Nom">
                                 @if ($errors->has('nom'))
                                 <span class="text-danger">{{ $errors->first('nom') }}</span>
@@ -77,22 +77,6 @@
                                     placeholder="Password">
                                 @if ($errors->has('password'))
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Siège</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend bg-transparent">
-                                    <span class="input-group-text bg-transparent border-right-0">
-                                        <i class="mdi mdi-lock-outline text-primary"></i>
-                                    </span>
-                                </div>
-                                <input type="siege" name="siege" class="form-control form-control-lg border-left-0"
-                                    id="exampleInputSiege" placeholder="siege">
-                                @if ($errors->has('siege'))
-                                <span class="text-danger">{{ $errors->first('siege') }}</span>
                                 @endif
                             </div>
                         </div>
