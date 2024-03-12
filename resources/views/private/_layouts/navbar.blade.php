@@ -124,17 +124,36 @@
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                     <img src="{{ asset('assets_private/images/faces/face5.jpg') }}" alt="profile" />
-                    <span class="nav-profile-name">Louis Barnett</span>
+
+                    @if(auth()->user()->role === 'admin')
+                    <span class="nav-profile-name">{{ auth()->user()->prenom }} - {{ auth()->user()->nom }}</span>
+                    @endif
+
+                    @if(auth()->user()->role === 'promoteur')
+                    <span class="nav-profile-name">{{ auth()->user()->nomcomplet }}</span>
+                    @endif
+
+                    @if(auth()->user()->role === 'abonne')
+                    <span class="nav-profile-name">{{ auth()->user()->prenom }} - {{ auth()->user()->nom }}</span>
+                    @endif
+
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                     <a class="dropdown-item">
                         <i class="mdi mdi-settings text-primary"></i>
-                        Settings
+                        Paramètre
                     </a>
-                    <a class="dropdown-item">
+
+
+                    <a class="dropdown-item" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
                         <i class="mdi mdi-logout text-primary"></i>
-                        Logout
+                        Déconnexion
                     </a>
+
+                    <form id="logout-form" action="{{ route('deconnexion') }}" method="POST">
+                        @csrf
+                    </form>
                 </div>
             </li>
         </ul>

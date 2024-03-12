@@ -10,7 +10,23 @@
         <div class="cta d-none d-md-flex align-items-center gap-2">
             <a href="{{ route('public.inscription-option') }}" class="scrollto">Inscription</a>
             <a href="{{ route('public.connexion') }}" class="scrollto">Connexion</a>
+
+            @auth
+
+            @if(auth()->user()->role === 'admin')
             <a href="{{ route('private.admin-tableaudebord') }}" class="scrollto">Mon Compte</a>
+            @endif
+
+            @if(auth()->user()->role === 'promoteur')
+            <a href="{{ route('private.promoteur-tableaudebord') }}" class="scrollto">Mon Compte</a>
+            @endif
+
+            @if(auth()->user()->role === 'abonne')
+            <a href="{{ route('private.abonne-tableaudebord') }}" class="scrollto">Mon Compte</a>
+            @endif
+
+            @endauth
+
         </div>
     </div>
 </section>

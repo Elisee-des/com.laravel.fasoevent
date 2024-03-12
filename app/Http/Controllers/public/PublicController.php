@@ -11,4 +11,9 @@ class PublicController extends Controller
     {
         return view('public.index');
     }
+
+    public function accesRefuser()
+    {
+        return view('public.acces-refuser');
+    }
 }

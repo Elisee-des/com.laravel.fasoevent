@@ -16,7 +16,6 @@
                     <h4>Bienvenu !!!</h4>
                     <h6 class="font-weight-light">Choisissez une option d'inscription</h6>
                     <form action="" class="pt-3" method="POST">
-
                         <div class="mt-3">
                             <a href="{{ route('public.inscription-promoteur') }}"
                                 class="btn btn-block btn-primary w-100 text-white btn-lg font-weight-medium auth-form-btn">
