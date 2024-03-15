@@ -65,7 +65,7 @@ class AuthController extends Controller
 
         $promoteur->save();
 
-        return redirect()->route('public.connexion')->withMessage('Inscription réussie ! Connectez-vous maintenant.');
+        return redirect()->route('public.connexion')->with('success', 'Inscription réussie ! Connectez-vous maintenant.');
     }
 
     public function inscriptionAbonne()
@@ -117,7 +117,7 @@ class AuthController extends Controller
 
         $abonne->save();
 
-        return redirect()->route('public.connexion')->withMessage('Inscription réussie ! Connectez-vous maintenant.');
+        return redirect()->route('public.connexion')->with('success', 'Inscription réussie ! Connectez-vous maintenant.');
     }
 
     public function connexion()

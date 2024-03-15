@@ -8,7 +8,15 @@
     <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
         <div class="row flex-grow">
             <div class="col-lg-6 d-flex align-items-center justify-content-center">
+
+
                 <div class="auth-form-transparent text-left p-3">
+                    @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
                     <div class="brand-logo">
                         <a href="{{ route('public.accueil') }}"><img src="{{ asset('assets_private/images/logo.svg') }}"
                                 alt="logo"></a>
@@ -45,8 +53,9 @@
                                         <i class="mdi mdi-lock-outline text-primary"></i>
                                     </span>
                                 </div>
-                                <input type="password" name="password" class="form-control form-control-lg border-left-0"
-                                    id="exampleInputPassword" placeholder="Mot de passe">
+                                <input type="password" name="password"
+                                    class="form-control form-control-lg border-left-0" id="exampleInputPassword"
+                                    placeholder="Mot de passe">
                                 @if ($errors->has('password'))
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
