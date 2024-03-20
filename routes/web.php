@@ -3,6 +3,7 @@
 use App\Http\Controllers\private\Abonne\AbonneTableaudebordController;
 use App\Http\Controllers\private\Admin\AdminTableaudebordController;
 use App\Http\Controllers\private\Admin\TableaudebordController;
+use App\Http\Controllers\private\ProfilController;
 use App\Http\Controllers\private\Promoteur\PromoteurTableaudebordController;
 use App\Http\Controllers\public\AuthController;
 use App\Http\Controllers\public\EvenementController;
@@ -44,4 +45,6 @@ Route::middleware(['auth', 'role:promoteur'])->group(function () {
 Route::middleware(['auth', 'role:abonne'])->group(function () {
     Route::get('/abonne-tableaudebord', [AbonneTableaudebordController::class, 'abonnetableaudebord'])->name('private.abonne-tableaudebord');
 });
+
+Route::get('/mon-profil', [ProfilController::class, 'profil'])->name('profil');
 

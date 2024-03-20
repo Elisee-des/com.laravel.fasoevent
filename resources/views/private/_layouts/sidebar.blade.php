@@ -30,7 +30,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="../../pages/profil/profil.html">
+            <a class="nav-link" href="{{ route('profil') }}">
                 <i class="mdi mdi-account-box-outline menu-icon"></i>
                 <span class="menu-title">Profil</span>
             </a>
@@ -62,9 +62,9 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="../../pages/profil/profil.html">
+            <a class="nav-link" href="{{ route('profil') }}">
                 <i class="mdi mdi-account-box-outline menu-icon"></i>
-                <span class="menu-title">Paramètre</span>
+                <span class="menu-title">Profil</span>
             </a>
         </li>
     </ul>
@@ -94,7 +94,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="../../pages/profil/profil.html">
+            <a class="nav-link" href="{{ route('profil') }}">
                 <i class="mdi mdi-account-box-outline menu-icon"></i>
                 <span class="menu-title">Profil</span>
             </a>

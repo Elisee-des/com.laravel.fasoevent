@@ -147,7 +147,12 @@
 
                     <a class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                        <i class="mdi mdi-logout text-primary"></i>
+                        <i class="md    {
+                            if ($request->user()->role !== $role) {
+                                abort(403, 'Accès refusé');
+                            }
+                            return $next($request);
+                        }i mdi-logout text-primary"></i>
                         Déconnexion
                     </a>
 

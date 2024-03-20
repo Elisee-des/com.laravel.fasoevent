@@ -1,0 +1,77 @@
+---> Authentification <---
+
+Installation de passport pour l'Authentification
+-------
+composer require laravel/passport
+php artisan passport:install
+php artisan migrate:fresh --seed
+php artisan passport:keys --force
+php artisan vendor:publish --tag=passport-config
+
+-------
+
+
+
+<?php
+
+namespace App\Http\Controllers\api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class BaseController extends Controller
+{
+    public function sendResponse($result, $message, $code = 200)
+    {
+    	$response = [
+            'success' => true,
+            'data'    => $result,
+            'message' => $message
+        ];
+        return response()->json($response, $code);
+    }
+
+    public function sendError($error, $errorMessages = [], $code = 400)
+    {
+    	$response = [
+            'success' => false,
+            'message' => $error
+        ];
+
+        if(!empty($errorMessages)){
+            $response['messageData'] = $errorMessages;
+        }
+        return response()->json($response, $code);
+    }
+
+    public function sendInfo($message)
+    {
+        return response()->json($message, 200);
+    }
+}
+
+
+public function connexion(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'email|required',
+            'password' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Erreur de validation des champs.', $validator->errors(), 400);
+        }
+
+        $loginData = request(['email', 'password']);
+        
+        if (!Auth::attempt($loginData)) {
+            return $this->sendError('Nom autorisé. Données invalides', 'Le nom d\'utilisateur ou le mot de passe est incorrecte', 401);
+        }
+        if (auth()->attempt($loginData)) {
+            $accessToken = auth()->user()->createToken('authToken')->accessToken;
+            return $this->sendResponse(['infos_user' => Auth::user(), 'access_token' => $accessToken], 'Avec succès');
+        } else {
+            return $this->sendError('Unauthorised. Invalid credentials.', 'Le nom d\'utilisateur ou le mot de passe est incorrecte', 401);
+        }
+    }
