@@ -46,5 +46,7 @@ Route::middleware(['auth', 'role:abonne'])->group(function () {
     Route::get('/abonne-tableaudebord', [AbonneTableaudebordController::class, 'abonnetableaudebord'])->name('private.abonne-tableaudebord');
 });
 
+Route::middleware(['auth'])->group(function () {
 Route::get('/mon-profil', [ProfilController::class, 'profil'])->name('profil');
-
+Route::put('/mon-profil/edition/action', [ProfilController::class, 'ediProfilAction'])->name('private.profil-edition');
+});

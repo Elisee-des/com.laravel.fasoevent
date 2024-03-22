@@ -39,7 +39,12 @@
                         <!--end col-->
                         <div class="col">
                             <div class="p-2">
-                                <h2 class="text-dark mb-1">SABIDANI YENTEM ELISEE</h2>
+                                @if (auth()->user()->role == 'admin' || auth()->user()->role =='abonne')
+                                <h2 class="text-dark mb-1">{{ auth()->user()->nom }} {{ auth()->user()->prenom }}</h2>
+                                @endif
+                                @if (auth()->user()->role == 'promoteur')
+                                <h2 class="text-dark mb-1">{{ auth()->user()->nomcomplet }} </h2>
+                                @endif
                             </div>
                         </div>
                         <!--end col-->
@@ -48,6 +53,13 @@
                     </div>
                     <!--end row-->
                 </div>
+
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -627,61 +639,113 @@
                                                 Edition les informations de mon compte
                                             </h5>
                                             <br />
-                                            <form action="javascript:void(0);">
+                                            <form action="{{ route('private.profil-edition') }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
                                                 <div class="row">
+                                                    @if (auth()->user()->role == 'admin' || auth()->user()->role ==
+                                                    'abonne')
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="fullname" class="form-label">Nom et
-                                                                prénom</label>
-                                                            <input type="text" class="form-control" id="fullname"
+                                                            <label for="fullname" class="form-label">Nom</label>
+                                                            <input type="text" name="nom" class="form-control" id="fullname"
                                                                 placeholder="Entrez votre nom"
-                                                                value="SABIDANI ELISEE" />
+                                                                value="{{ auth()->user()->nom }}" />
                                                         </div>
                                                     </div>
-                                                    <!--end col-->
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="email" class="form-label">E-mail</label>
-                                                            <input type="email" class="form-control" id="email"
+                                                            <label for="fullname" class="form-label">Prénom</label>
+                                                            <input type="text" name="prenom" class="form-control" id="fullname"
+                                                                placeholder="Entrez votre prénom"
+                                                                value="{{ auth()->user()->prenom }}" />
+                                                        </div>
+                                                    </div>
+                                                    @endif
+                                                    @if (auth()->user()->role == 'promoteur')
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="fullname" class="form-label">Nom complet</label>
+                                                            <input type="text" name="nomcomplet" class="form-control" id="fullname"
+                                                                placeholder="Entrez votre nom complet"
+                                                                value="{{ auth()->user()->nomcomplet }}" />
+                                                        </div>
+                                                    </div>
+                                                    @endif
+                                                    <!--end col-->
+                                                    {{-- <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="email" class="form-labonneabel">E-mail</label>
+                                                            <input type="email" name="email" class="form-control" id="email"
                                                                 placeholder="Entrez votre email"
-                                                                value="esabidan@gmail.com" />
+                                                                value="{{ auth()->user()->email }}" />
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <!--end col-->
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="numero" class="form-label">Numero de
+                                                            <label for="numero" class="form-label">Numéro de
                                                                 telephone</label>
-                                                            <input type="text" class="form-control" id="telephone"
+                                                            <input type="text" class="form-control" name="telephone" id="telephone"
                                                                 placeholder="Entrez votre numero de telephone"
-                                                                value="+(226) 56 78 56 67" />
+                                                                value="{{ auth()->user()->telephone }}" />
                                                         </div>
                                                     </div>
-                                                    <!--end col-->
+                                                    @if (auth()->user()->role == 'promoteur')
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="siege" class="form-label">Siège</label>
-                                                            <input type="text" class="form-control" id="siege"
-                                                                placeholder="Entrez votre siège" value="Ouagadougou" />
+                                                            <input type="text"  name="siege" class="form-control" id="siege"
+                                                                placeholder="Entrez votre siége"
+                                                                value="{{ auth()->user()->siege }}" />
                                                         </div>
                                                     </div>
-                                                    <!--end col-->
 
-                                                    <!--end col-->
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="skillsInput" class="form-label">Domaine
-                                                                d'activité</label>
-                                                            <select class="form-control"></select>
+                                                            <label for="adresse" class="form-label">Adresse</label>
+                                                            <input type="text" name="adresse" class="form-control" id="siege"
+                                                                placeholder="Entrez votre adresse"
+                                                                value="{{ auth()->user()->adresse }}" />
                                                         </div>
                                                     </div>
 
-                                                    <!--end col-->
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="skillsInput" class="form-label">Domaines
+                                                                d'activités</label>
+                                                            <input type="text" name="activites" class="form-control" id="siege"
+                                                                placeholder="Entrez vos domaoines d'activités"
+                                                                value="{{ auth()->user()->activites }}" />
+                                                        </div>
+                                                    </div>
 
-                                                    <!--end col-->
+                                                    @endif
+
+                                                    @if (auth()->user()->role == 'abonne')
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="adresse" class="form-label">Adresse</label>
+                                                            <input type="text" name="adresse" class="form-control" id="siege"
+                                                                placeholder="Entrez votre adresse"
+                                                                value="{{ auth()->user()->adresse }}" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="skillsInput"
+                                                                class="form-label">Préférences</label>
+                                                            <input type="text" name="preferences" class="form-control" id="siege"
+                                                                placeholder="Entrez votre adresse"
+                                                                value="{{ auth()->user()->preferences }}" />
+                                                        </div>
+                                                    </div>
+                                                    @endif
+
                                                     <div class="col-lg-12">
                                                         <div class="hstack gap-2 justify-content-end">
-                                                            <button type="submit" class="btn btn-primary text-white">
+                                                            <button type="submit" onclick="return confirm('Etes vous sûr de vouloir enrregistré les nouveaux changement ???')" class="btn btn-primary text-white">
                                                                 Sauvegarder les changements
                                                             </button>
                                                         </div>
@@ -792,5 +856,6 @@
 
     <!-- main-panel ends -->
 </div>
+
 
 @endsection
