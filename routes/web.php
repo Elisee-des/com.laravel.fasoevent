@@ -49,4 +49,5 @@ Route::middleware(['auth', 'role:abonne'])->group(function () {
 Route::middleware(['auth'])->group(function () {
 Route::get('/mon-profil', [ProfilController::class, 'profil'])->name('profil');
 Route::put('/mon-profil/edition/action', [ProfilController::class, 'ediProfilAction'])->name('private.profil-edition');
+Route::put('/mon-profil/edition mot de passe', [ProfilController::class, 'editPassword'])->name('private.edit-password');
 });

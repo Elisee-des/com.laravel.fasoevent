@@ -55,11 +55,11 @@
                 </div>
 
                 @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    @endif
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -648,16 +648,16 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="fullname" class="form-label">Nom</label>
-                                                            <input type="text" name="nom" class="form-control" id="fullname"
-                                                                placeholder="Entrez votre nom"
+                                                            <input type="text" name="nom" class="form-control"
+                                                                id="fullname" placeholder="Entrez votre nom"
                                                                 value="{{ auth()->user()->nom }}" />
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="fullname" class="form-label">Prénom</label>
-                                                            <input type="text" name="prenom" class="form-control" id="fullname"
-                                                                placeholder="Entrez votre prénom"
+                                                            <input type="text" name="prenom" class="form-control"
+                                                                id="fullname" placeholder="Entrez votre prénom"
                                                                 value="{{ auth()->user()->prenom }}" />
                                                         </div>
                                                     </div>
@@ -666,8 +666,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="fullname" class="form-label">Nom complet</label>
-                                                            <input type="text" name="nomcomplet" class="form-control" id="fullname"
-                                                                placeholder="Entrez votre nom complet"
+                                                            <input type="text" name="nomcomplet" class="form-control"
+                                                                id="fullname" placeholder="Entrez votre nom complet"
                                                                 value="{{ auth()->user()->nomcomplet }}" />
                                                         </div>
                                                     </div>
@@ -676,8 +676,8 @@
                                                     {{-- <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="email" class="form-labonneabel">E-mail</label>
-                                                            <input type="email" name="email" class="form-control" id="email"
-                                                                placeholder="Entrez votre email"
+                                                            <input type="email" name="email" class="form-control"
+                                                                id="email" placeholder="Entrez votre email"
                                                                 value="{{ auth()->user()->email }}" />
                                                         </div>
                                                     </div> --}}
@@ -686,7 +686,8 @@
                                                         <div class="mb-3">
                                                             <label for="numero" class="form-label">Numéro de
                                                                 telephone</label>
-                                                            <input type="text" class="form-control" name="telephone" id="telephone"
+                                                            <input type="text" class="form-control" name="telephone"
+                                                                id="telephone"
                                                                 placeholder="Entrez votre numero de telephone"
                                                                 value="{{ auth()->user()->telephone }}" />
                                                         </div>
@@ -695,8 +696,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="siege" class="form-label">Siège</label>
-                                                            <input type="text"  name="siege" class="form-control" id="siege"
-                                                                placeholder="Entrez votre siége"
+                                                            <input type="text" name="siege" class="form-control"
+                                                                id="siege" placeholder="Entrez votre siége"
                                                                 value="{{ auth()->user()->siege }}" />
                                                         </div>
                                                     </div>
@@ -704,8 +705,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="adresse" class="form-label">Adresse</label>
-                                                            <input type="text" name="adresse" class="form-control" id="siege"
-                                                                placeholder="Entrez votre adresse"
+                                                            <input type="text" name="adresse" class="form-control"
+                                                                id="siege" placeholder="Entrez votre adresse"
                                                                 value="{{ auth()->user()->adresse }}" />
                                                         </div>
                                                     </div>
@@ -714,7 +715,8 @@
                                                         <div class="mb-3">
                                                             <label for="skillsInput" class="form-label">Domaines
                                                                 d'activités</label>
-                                                            <input type="text" name="activites" class="form-control" id="siege"
+                                                            <input type="text" name="activites" class="form-control"
+                                                                id="siege"
                                                                 placeholder="Entrez vos domaoines d'activités"
                                                                 value="{{ auth()->user()->activites }}" />
                                                         </div>
@@ -726,8 +728,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="adresse" class="form-label">Adresse</label>
-                                                            <input type="text" name="adresse" class="form-control" id="siege"
-                                                                placeholder="Entrez votre adresse"
+                                                            <input type="text" name="adresse" class="form-control"
+                                                                id="siege" placeholder="Entrez votre adresse"
                                                                 value="{{ auth()->user()->adresse }}" />
                                                         </div>
                                                     </div>
@@ -736,8 +738,8 @@
                                                         <div class="mb-3">
                                                             <label for="skillsInput"
                                                                 class="form-label">Préférences</label>
-                                                            <input type="text" name="preferences" class="form-control" id="siege"
-                                                                placeholder="Entrez votre adresse"
+                                                            <input type="text" name="preferences" class="form-control"
+                                                                id="siege" placeholder="Entrez votre adresse"
                                                                 value="{{ auth()->user()->preferences }}" />
                                                         </div>
                                                     </div>
@@ -745,7 +747,9 @@
 
                                                     <div class="col-lg-12">
                                                         <div class="hstack gap-2 justify-content-end">
-                                                            <button type="submit" onclick="return confirm('Etes vous sûr de vouloir enrregistré les nouveaux changement ???')" class="btn btn-primary text-white">
+                                                            <button type="submit"
+                                                                onclick="return confirm('Etes vous sûr de vouloir enrregistré les nouveaux changement ???')"
+                                                                class="btn btn-primary text-white">
                                                                 Sauvegarder les changements
                                                             </button>
                                                         </div>
@@ -764,36 +768,34 @@
                                                 Edition les informations d'authentification
                                             </h5>
                                             <br />
-                                            <form action="javascript:void(0);">
+                                            <form action="{{ route('private.edit-password') }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
                                                 <div class="row g-2">
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-12">
                                                         <div>
-                                                            <label for="oldpasswordInput" class="form-label">Ancien mot
-                                                                de passe*</label>
-                                                            <input type="password" class="form-control"
-                                                                id="oldpasswordInput"
-                                                                placeholder="Entrez votre mot de passe actuel" />
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-lg-4">
-                                                        <div>
-                                                            <label for="newpasswordInput" class="form-label">Nouveau mot
-                                                                de passe*</label>
-                                                            <input type="password" class="form-control"
-                                                                id="newpasswordInput"
-                                                                placeholder="Entrez votre nouveau mot de passe" />
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-lg-4">
-                                                        <div>
-                                                            <label for="confirmpasswordInput"
-                                                                class="form-label">Confirmer votre nouveau mot de
+                                                            <label for="confirmpasswordInput" class="form-label">Nouveau
+                                                                mot de
                                                                 passe*</label>
+                                                            <input type="password" name="new_password"
+                                                                class="form-control" id="confirmpasswordInput"
+                                                                placeholder="Nouveau mot de passe" />
+                                                            @if ($errors->has('new_password'))
+                                                            <span class="text-danger">{{ $errors->first('new_password')
+                                                                }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12">
+                                                        <div>
+                                                            <label for="newpasswordInput" class="form-label">Répétez
+                                                                votre nouveau mot
+                                                                de passe*</label>
                                                             <input type="password" class="form-control"
-                                                                id="confirmpasswordInput"
-                                                                placeholder="Répétez votre nouveau mot de passe" />
+                                                                id="newpasswordInput" name="new_password_confirmation"
+                                                                placeholder="Repetez mot de passe" />
+
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -808,7 +810,9 @@
                                                     <!--end col-->
                                                     <div class="col-lg-12">
                                                         <div class="text-end">
-                                                            <button type="submit" class="btn btn-primary text-white">
+                                                            <button type="submit"
+                                                                onclick="return confirm('Etes vous sûr de vouloir enrregistré les nouveaux changement ???')"
+                                                                class="btn btn-primary text-white">
                                                                 Changer de mot de passe
                                                             </button>
                                                         </div>
