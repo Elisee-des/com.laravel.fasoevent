@@ -19,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/inscription', [AuthController::class, 'inscription']);
+Route::post('/inscription-promoteur', [AuthController::class, 'inscriptionPromoteur']);
+Route::post('/inscription-abonne', [AuthController::class, 'inscriptionAbonne']);
+
 Route::post('/connexion', [AuthController::class, 'connexion'])->middleware(['api-login', 'throttle']);
 
 

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProfilController extends Controller
@@ -62,4 +63,47 @@ class ProfilController extends Controller
         return redirect()->back()->with('success', 'Mot de passe modifié avec succès');
     }
 
+    public function profil_edition_image_action(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'new_image' => 'required|file|mimes:jpeg,png,jpg|max:5120',
+            ],
+            [
+                'new_image.required' => 'Le champ image est requis.',
+                'new_image.file' => 'Le champ doit être un fichier.',
+                'new_image.mimes' => 'Le fichier doit être de type :values.',
+                'new_image.max' => 'La taille du fichier ne doit pas dépasser :max kilo-octets.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = Auth::user();
+
+        // Traitement du téléchargement de la nouvelle image
+        if ($request->hasFile('new_image')) {
+            $file = $request->file('new_image');
+            $path = $file->store('photos', 'public');
+
+            // Suppression de l'ancienne image si elle existe
+            if ($user->photo) {
+                Storage::disk('public')->delete($user->photo);
+            }
+
+            $user->photo = $path;
+        } else {
+            return redirect()->back()
+                ->withErrors("succes", "Veuillez selectionner une image");
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Image éditée avec succès.');
+    }
 }

@@ -1,0 +1,26 @@
+Dans le contexte d'une API RESTful, voici quelques-uns des codes de statut de réponse HTTP les plus couramment utilisés, accompagnés de leur signification :
+    
+    
+    200 OK : La requête a abouti et renvoie les données demandées.
+
+    201 Created : La requête a réussi et a entraîné la création d'une nouvelle ressource. La réponse doit inclure un en-tête Location pointant vers la nouvelle ressource.
+
+    204 No Content : La requête a abouti mais la réponse ne contient pas de contenu. Cela est souvent utilisé pour les opérations de suppression ou de mise à jour où aucune donnée n'est renvoyée dans le corps de la réponse.
+
+    400 Bad Request : La requête est mal formée ou ne peut pas être traitée en raison d'une erreur du client.
+
+    401 Unauthorized : L'accès à la ressource est refusé en raison d'une authentification manquante ou invalide.
+
+    403 Forbidden : L'accès à la ressource est refusé pour des raisons autres que l'authentification, par exemple, des autorisations insuffisantes.
+
+    404 Not Found : La ressource demandée n'a pas été trouvée sur le serveur.
+
+    405 Method Not Allowed : La méthode de requête utilisée n'est pas prise en charge pour la ressource spécifiée.
+
+    422 Unprocessable Entity : La requête est bien formée mais ne peut pas être traitée en raison de violations de validation ou de contraintes métier.
+
+    500 Internal Server Error : Une erreur interne du serveur s'est produite lors du traitement de la requête, indiquant un problème du côté du serveur.
+
+    503 Service Unavailable : Le serveur n'est pas disponible pour gérer la requête en raison d'une surcharge ou d'une maintenance temporaire.
+
+    429 Too Many Requests : Le client a envoyé trop de requêtes dans un laps de temps donné, dépassant les limites définies par le serveur.
