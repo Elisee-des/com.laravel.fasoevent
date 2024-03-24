@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\private\admin\ActiviteController;
 use App\Http\Controllers\api\public\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,15 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::controller(AuthController::class)->group(function() {
+    Route::post('/inscription-promoteur', 'inscriptionPromoteur');
+    Route::post('/inscription-abonne', 'inscriptionAbonne');
+    Route::post('/connexion', 'connexion');
+});
 
-Route::post('/inscription-promoteur', [AuthController::class, 'inscriptionPromoteur']);
-Route::post('/inscription-abonne', [AuthController::class, 'inscriptionAbonne']);
+Route::middleware('auth:sanctum')->group( function () {
+    Route::ApiResource('activites',ActiviteController::class);
 
-Route::post('/connexion', [AuthController::class, 'connexion'])->middleware(['api-login', 'throttle']);
+    // Route::middleware(['role:admin'])->group(function () {
+    // });
 
-
-// Route::middleware(['auth:api'])->group(function () {
-// });
+    Route::post('/deconnexion', [AuthController::class, 'logout']);
+});

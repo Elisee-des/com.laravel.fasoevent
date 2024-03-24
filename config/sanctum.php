@@ -29,7 +29,8 @@ return [
     | This array contains the authentication guards that will be checked when
     | Sanctum is trying to authenticate a request. If none of these guards
     | are able to authenticate the request, Sanctum will use the bearer
-    | token that's present on an incoming request for authentication.
+    | token that's present         "laravel/passport": "^12.0",
+on an incoming request for authentication.
     |
     */
 
@@ -47,6 +48,8 @@ return [
     */
 
     'expiration' => null,
+
+    'token_length' => 500,
 
     /*
     |--------------------------------------------------------------------------
