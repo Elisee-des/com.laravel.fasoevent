@@ -81,6 +81,7 @@ on an incoming request for authentication.
         'authenticate_session' => Laravel\Sanctum\Http\Middleware\AuthenticateSession::class,
         'encrypt_cookies' => App\Http\Middleware\EncryptCookies::class,
         'verify_csrf_token' => App\Http\Middleware\VerifyCsrfToken::class,
+        'role' => \App\Http\Middleware\Role::class,    
     ],
 
 ];

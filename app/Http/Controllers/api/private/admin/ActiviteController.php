@@ -90,9 +90,11 @@ class ActiviteController extends Controller
                 ], 404);
             }
 
+            $data['activite'] = $activite;
+
             return response()->json([
                 'status' => 'success',
-                'data' => $activite
+                'data' => $data
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -186,6 +188,8 @@ class ActiviteController extends Controller
     public function activites()
     {
         $domaine_activites = Activite::orderBy('created_at', 'desc')->get();
+        // $domaine_activites = DB::select('SELECT * FROM activites ORDER BY created_at DESC');
+
         return $domaine_activites;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\private\admin\ActiviteController;
+use App\Http\Controllers\api\private\admin\EvenementController;
 use App\Http\Controllers\api\public\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,10 +24,11 @@ Route::controller(AuthController::class)->group(function() {
 });
 
 Route::middleware('auth:sanctum')->group( function () {
-    Route::ApiResource('activites',ActiviteController::class);
-
-    // Route::middleware(['role:admin'])->group(function () {
-    // });
+    
+    Route::middleware(['role:admin'])->group(function () {
+        Route::ApiResource('activites',ActiviteController::class);
+        Route::ApiResource('evenements',EvenementController::class);
+    });
 
     Route::post('/deconnexion', [AuthController::class, 'logout']);
 });
