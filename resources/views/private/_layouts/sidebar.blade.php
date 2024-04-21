@@ -23,7 +23,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="../../pages/categorie/categories.html">
+            <a class="nav-link" href="{{ route('categories.index') }}">
                 <i class="mdi mdi-equal-box menu-icon"></i>
                 <span class="menu-title">Catgories</span>
             </a>

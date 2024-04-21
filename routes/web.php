@@ -3,6 +3,7 @@
 use App\Http\Controllers\private\Abonne\AbonneTableaudebordController;
 use App\Http\Controllers\private\Admin\AdminTableaudebordController;
 use App\Http\Controllers\private\Admin\TableaudebordController;
+use App\Http\Controllers\private\Admin\CategorieController;
 use App\Http\Controllers\private\ProfilController;
 use App\Http\Controllers\private\Promoteur\PromoteurTableaudebordController;
 use App\Http\Controllers\public\AuthController;
@@ -32,6 +33,7 @@ Route::post('/deconnexion', [AuthController::class, 'deconnexion'])->name('decon
 #Admin routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin-tableaudebord', [AdminTableaudebordController::class, 'admintableaudebord'])->name('private.admin-tableaudebord');
+    Route::resource('categories', CategorieController::class);
 });
 
 
